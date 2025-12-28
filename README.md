@@ -1,73 +1,91 @@
-# Welcome to your Lovable project
+# Ritmo Agendamento SaaS
 
-## Project info
+> Sistema de agendamento online multi-tenant com painel administrativo, integração WhatsApp e arquitetura moderna.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## ⚠️ AVISO: Repositório Privado
 
-## How can I edit this code?
+Este projeto é um SaaS privado e **NÃO deve ser compartilhado publicamente**. O acesso ao código é restrito a desenvolvedores autorizados pela equipe do Ritmo Agendamento.
 
-There are several ways of editing your application.
+Se você recebeu acesso:
+- **Não divulgue, compartilhe ou torne público este repositório.**
+- Siga as políticas de segurança e privacidade da empresa.
+- Dúvidas sobre permissões, onboarding ou uso do código? Fale com o responsável técnico do projeto.
 
-**Use Lovable**
+---
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## 📋 Estrutura do Projeto
 
-Changes made via Lovable will be committed automatically to this repo.
+```
+SaaS-Agendamento/
+├── frontend/          # App Next.js 14 (cliente/dashboard)
+└── openapi.json       # Especificação da API
+```
 
-**Use your preferred IDE**
+## 🚀 Início Rápido
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+### Frontend (Next.js)
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+cd frontend
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Acesse: [http://localhost:3000](http://localhost:3000)
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Configurar Ambiente
 
-**Use GitHub Codespaces**
+Crie um arquivo `.env.local` na pasta `frontend/`:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```env
+NEXT_PUBLIC_RITMO_API_URL=http://localhost:8000
+NEXT_PUBLIC_UAZAPI_URL=https://lfsystem.uazapi.com
+UAZAPI_ADMIN_TOKEN=SEU_TOKEN_AQUI
+NEXT_PUBLIC_UAZAPI_WEBHOOK_URL=https://seu-webhook.com
+```
 
-## What technologies are used for this project?
+## 🎯 Funcionalidades Principais
 
-This project is built with:
+✅ Painel do cliente (dashboard)  
+✅ Painel administrativo (admin)  
+✅ Integração WhatsApp (UAZAPI)  
+✅ Sistema multi-tenant  
+✅ Responsivo (mobile, tablet, desktop)  
+✅ Tema claro/escuro  
+✅ Autenticação JWT  
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 🛠️ Stack Técnico
 
-## How can I deploy this project?
+- **Frontend:** Next.js 14, TypeScript, CSS Modules
+- **Auth:** JWT
+- **Integração:** UAZAPI (WhatsApp)
+- **UI:** Componentes custom + Lucide Icons
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## 📚 Documentação
 
-## Can I connect a custom domain to my Lovable project?
+- [Frontend README](./frontend/README.md) - Detalhes da aplicação Next.js
+- [API Spec](./openapi.json) - Especificação OpenAPI
 
-Yes, you can!
+## 📝 Scripts Principais
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```sh
+# Frontend
+cd frontend
+npm run dev      # Desenvolvimento
+npm run build    # Build de produção
+npm run start    # Produção
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## 🔐 Segurança
+
+- Não commite `.env.local` com credenciais reais
+- Use variáveis de ambiente para dados sensíveis
+- Tokens UAZAPI devem ser mantidos privados
+
+## 💬 Suporte
+
+Para dúvidas técnicas ou problemas, entre em contato com o responsável pelo projeto.
+
+---
+
+**Desenvolvido com ❤️ para Ritmo Agendamento**
