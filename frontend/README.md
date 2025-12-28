@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AVISO: Repositório Privado
 
-## Getting Started
+Este projeto é um SaaS privado e **NÃO deve ser compartilhado publicamente**. O acesso ao código é restrito a desenvolvedores autorizados pela equipe do Ritmo Agendamento.
 
-First, run the development server:
+Se você recebeu acesso:
+- **Não divulgue, compartilhe ou torne público este repositório.**
+- Siga as políticas de segurança e privacidade da empresa.
+- Dúvidas sobre permissões, onboarding ou uso do código? Fale com o responsável técnico do projeto.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Agendamento SaaS
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Sistema de agendamento online multi-tenant com painel administrativo, integração WhatsApp (UAZAPI), tema responsivo e arquitetura moderna com Next.js 14 (App Router).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Funcionalidades
+- Painel do cliente e painel administrativo
+- Integração WhatsApp Business via UAZAPI (envio automático de mensagens)
+- Configuração automática de Webhook
+- Multi-empresa (multi-tenant)
+- Responsivo (desktop, tablet, mobile)
+- Tema claro/escuro
+- Autenticação JWT
+- Relatórios, agenda, clientes, serviços, equipe, configurações
 
-## Learn More
+## Tecnologias
+- Next.js 14 (App Router)
+- TypeScript
+- CSS Modules + CSS Variables
+- UAZAPI (https://lfsystem.uazapi.com)
+- JWT Auth
 
-To learn more about Next.js, take a look at the following resources:
+## Instalação
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Clone o repositório:**
+	```sh
+	git clone https://github.com/luisfsill/SaaS-Agendamento.git
+	cd SaaS-Agendamento/frontend
+	```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. **Instale as dependências:**
+	```sh
+	npm install
+	# ou
+	yarn install
+	```
 
-## Deploy on Vercel
+3. **Configure o ambiente:**
+	- Copie `.env.local.example` para `.env.local` e preencha as variáveis:
+	  ```env
+	  NEXT_PUBLIC_RITMO_API_URL=http://localhost:8000
+	  NEXT_PUBLIC_UAZAPI_URL=https://lfsystem.uazapi.com
+	  UAZAPI_ADMIN_TOKEN=SEU_TOKEN_ADMIN_UAZAPI
+	  NEXT_PUBLIC_UAZAPI_WEBHOOK_URL=https://seu-backend.com/webhook/chatbot
+	  ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. **Inicie o servidor de desenvolvimento:**
+	```sh
+	npm run dev
+	```
+	Acesse: [http://localhost:3000](http://localhost:3000)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Integração WhatsApp (UAZAPI)
+- O webhook é configurado automaticamente ao conectar o WhatsApp.
+- Configure a variável `NEXT_PUBLIC_UAZAPI_WEBHOOK_URL` com a URL do seu backend/n8n.
+- Para cada tenant, uma instância WhatsApp é criada e gerenciada.
+
+## Scripts principais
+- `npm run dev` — inicia o frontend em modo desenvolvimento
+- `npm run build` — build de produção
+- `npm run start` — inicia o frontend em produção
+
+## Estrutura de Pastas
+- `app/` — Páginas e rotas (Next.js App Router)
+- `components/` — Componentes reutilizáveis (layout, UI, modais)
+- `lib/` — Contextos, hooks e integrações (ex: uazapi.ts)
+- `public/` — Assets estáticos
+
+## Contribuição
+Pull requests são bem-vindos! Abra uma issue para discutir melhorias ou bugs.
+
+## Licença
+MIT
