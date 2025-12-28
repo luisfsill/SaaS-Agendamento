@@ -51,6 +51,31 @@
     .menuButton {
         display: flex;
     }
+
+    .homeButton {
+        display: flex;
+    }
+}
+
+.homeButton {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    color: var(--color-text-secondary);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.homeButton:hover {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-primary);
 }
 
 .searchWrapper {

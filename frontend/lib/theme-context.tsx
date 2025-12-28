@@ -9,6 +9,7 @@ interface ThemeContextType {
     resolvedTheme: 'light' | 'dark';
     setTheme: (theme: Theme) => void;
     toggleTheme: () => void;
+    mounted: boolean;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -21,9 +22,11 @@ interface ThemeProviderProps {
 export function ThemeProvider({ children, defaultTheme = 'system' }: ThemeProviderProps) {
     const [theme, setThemeState] = useState<Theme>(defaultTheme);
     const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('light');
+    const [mounted, setMounted] = useState(false);
 
     // Load saved theme from localStorage
     useEffect(() => {
+        setMounted(true);
         const savedTheme = localStorage.getItem('ritmo_theme') as Theme | null;
         if (savedTheme && ['light', 'dark', 'system'].includes(savedTheme)) {
             setThemeState(savedTheme);
@@ -32,6 +35,8 @@ export function ThemeProvider({ children, defaultTheme = 'system' }: ThemeProvid
 
     // Handle theme changes and system preference
     useEffect(() => {
+        if (!mounted) return;
+        
         const root = document.documentElement;
 
         const applyTheme = (effectiveTheme: 'light' | 'dark') => {
@@ -52,7 +57,7 @@ export function ThemeProvider({ children, defaultTheme = 'system' }: ThemeProvid
         } else {
             applyTheme(theme);
         }
-    }, [theme]);
+    }, [theme, mounted]);
 
     const setTheme = (newTheme: Theme) => {
         setThemeState(newTheme);
@@ -65,7 +70,7 @@ export function ThemeProvider({ children, defaultTheme = 'system' }: ThemeProvid
     };
 
     return (
-        <ThemeContext.Provider value={{ theme, resolvedTheme, setTheme, toggleTheme }}>
+        <ThemeContext.Provider value={{ theme, resolvedTheme, setTheme, toggleTheme, mounted }}>
             {children}
         </ThemeContext.Provider>
     );

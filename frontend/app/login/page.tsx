@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -23,7 +23,13 @@ export default function LoginPage() {
     const { login, isLoading } = useAuth();
     const [submitError, setSubmitError] = useState<string | null>(null);
     const [showPassword, setShowPassword] = useState(false);
-    const isDevelopment = process.env.NODE_ENV === 'development';
+    const [mounted, setMounted] = useState(false);
+    const [isDevelopment, setIsDevelopment] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+        setIsDevelopment(process.env.NODE_ENV === 'development');
+    }, []);
 
     const {
         register,
@@ -55,6 +61,7 @@ export default function LoginPage() {
                 tenant_id: 'demo-tenant',
                 email: 'admin@admin.com',
                 name: 'Admin',
+                business_name: 'Meu Negócio Demo',
                 exp: 9999999999
             })).replace(/=/g, '');
             const signature = 'demo-signature';
@@ -70,8 +77,11 @@ export default function LoginPage() {
             const { setTokens } = await import('@/lib/api');
             setTokens(demoTokens);
             
-            // Redirecionar para dashboard
-            router.push('/dashboard');
+            // Aguardar um pouco para garantir que os cookies foram gravados
+            await new Promise(resolve => setTimeout(resolve, 100));
+            
+            // Redirecionar para dashboard usando window.location para forçar reload
+            window.location.href = '/dashboard';
         } catch (err) {
             setSubmitError('Erro ao fazer login de demonstração.');
         }
@@ -102,16 +112,9 @@ export default function LoginPage() {
     return (
         <div className={styles.container}>
             <nav className={styles.navbar}>
-                <Link href="/" className={styles.navLogo}>
-                    <span className={styles.navLogoIcon}>📅</span>
-                    <span className={styles.navLogoText}>Ritmo</span>
+                <Link href="/" className={styles.navCenter} title="Home" aria-label="Ir para Home">
+                    <Home size={20} />
                 </Link>
-                <div className={styles.navCenter}>
-                    <Link href="/" className={styles.navLink}>
-                        <Home size={18} />
-                        <span>Home</span>
-                    </Link>
-                </div>
                 <div className={styles.navActions}>
                     <ThemeToggle />
                 </div>
@@ -172,7 +175,7 @@ export default function LoginPage() {
                         <Link href="/forgot-password" className={styles.forgotLink}>
                             Esqueceu a senha?
                         </Link>
-                        {isDevelopment && (
+                        {mounted && isDevelopment && (
                             <button
                                 type="button"
                                 onClick={handleDemoLogin}

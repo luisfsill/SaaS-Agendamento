@@ -5,7 +5,7 @@ import { useTheme } from '@/lib/theme-context';
 import styles from './ThemeToggle.module.css';
 
 export function ThemeToggle() {
-    const { theme, setTheme, resolvedTheme } = useTheme();
+    const { theme, setTheme, resolvedTheme, mounted } = useTheme();
 
     const cycleTheme = () => {
         const themes: Array<'light' | 'dark'> = ['light', 'dark'];
@@ -13,6 +13,21 @@ export function ThemeToggle() {
         const nextIndex = (currentIndex + 1) % themes.length;
         setTheme(themes[nextIndex]);
     };
+
+    // Evitar problemas de hidratação
+    if (!mounted) {
+        return (
+            <button
+                className={styles.toggle}
+                aria-label="Alternar tema"
+                title="Tema"
+            >
+                <span className={styles.iconWrapper}>
+                    <Sun size={18} />
+                </span>
+            </button>
+        );
+    }
 
     return (
         <button

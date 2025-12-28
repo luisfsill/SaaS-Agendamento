@@ -25,13 +25,25 @@
     padding: var(--space-4) var(--space-6);
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+}
+
+@media (min-width: 768px) {
+    .headerContent {
+        justify-content: space-between;
+    }
 }
 
 .logo {
-    display: flex;
+    display: none;
     align-items: center;
     gap: var(--space-2);
+}
+
+@media (min-width: 768px) {
+    .logo {
+        display: flex;
+    }
 }
 
 .logoIcon {
@@ -70,6 +82,12 @@
     display: flex;
     align-items: center;
     gap: var(--space-3);
+}
+
+@media (min-width: 768px) {
+    .headerActions {
+        margin-left: auto;
+    }
 }
 
 .themeToggle {

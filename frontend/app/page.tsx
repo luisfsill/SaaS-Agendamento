@@ -6,11 +6,16 @@ import { useTheme } from '@/lib/theme-context';
 import styles from './page.module.css';
 
 export default function LandingPage() {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, mounted } = useTheme();
 
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
+
+  // Evitar problemas de hidratação - não renderizar até montar
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <div className={styles.page}>

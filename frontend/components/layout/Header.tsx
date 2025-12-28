@@ -1,6 +1,7 @@
 'use client';
 
-import { Bell, Search, Menu } from 'lucide-react';
+import Link from 'next/link';
+import { Bell, Search, Menu, Home } from 'lucide-react';
 import { ThemeToggle } from '@/components/ui';
 import { useAuth } from '@/lib/auth-context';
 import styles from './Header.module.css';
@@ -24,6 +25,9 @@ export function Header({ onMenuClick }: HeaderProps) {
                         <Menu size={24} />
                     </button>
                 )}
+                <Link href="/" className={styles.homeButton} title="Home" aria-label="Ir para Home">
+                    <Home size={20} />
+                </Link>
                 <div className={styles.searchWrapper}>
                     <Search size={18} className={styles.searchIcon} />
                     <input
