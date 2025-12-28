@@ -1,0 +1,455 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.backLink {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.backLink:hover {
+    color: var(--color-text-primary);
+}
+
+.title {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-bold);
+    color: var(--color-text-primary);
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: var(--text-xl);
+    }
+}
+
+/* Steps */
+.steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-4) 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 480px) {
+    .steps {
+        justify-content: flex-start;
+        padding: var(--space-4) var(--space-2);
+    }
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    opacity: 0.5;
+    flex-shrink: 0;
+}
+
+.step.active {
+    opacity: 1;
+}
+
+.stepNumber {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-secondary);
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-full);
+}
+
+.step.active .stepNumber {
+    color: white;
+    background-color: var(--color-accent);
+}
+
+.stepLabel {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    display: none;
+}
+
+@media (min-width: 640px) {
+    .stepLabel {
+        display: block;
+    }
+}
+
+.step.active .stepLabel {
+    color: var(--color-text-primary);
+    font-weight: var(--font-medium);
+}
+
+.stepLine {
+    width: 40px;
+    height: 2px;
+    background-color: var(--color-border-subtle);
+    flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+    .stepLine {
+        width: 20px;
+    }
+}
+
+/* Content */
+.content {
+    background-color: var(--color-bg-elevated);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+}
+
+@media (max-width: 480px) {
+    .content {
+        padding: var(--space-4);
+    }
+}
+
+.stepContent {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+.stepTitle {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-primary);
+}
+
+.subTitle {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-base);
+    font-weight: var(--font-medium);
+    color: var(--color-text-primary);
+    margin-top: var(--space-4);
+}
+
+.label {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-2);
+}
+
+/* Service Grid */
+.serviceGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-3);
+}
+
+.serviceCard {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    text-align: left;
+    background-color: var(--color-bg-secondary);
+    border: 2px solid transparent;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.serviceCard:hover {
+    border-color: var(--color-border);
+}
+
+.serviceCard.selected {
+    border-color: var(--color-accent);
+    background-color: var(--color-accent-subtle);
+}
+
+.serviceName {
+    font-size: var(--text-base);
+    font-weight: var(--font-medium);
+    color: var(--color-text-primary);
+}
+
+.serviceMeta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+}
+
+.serviceMeta span {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+}
+
+/* Staff Grid */
+.staffGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.staffCard {
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-secondary);
+    border: 2px solid transparent;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.staffCard:hover {
+    border-color: var(--color-border);
+}
+
+.staffCard.selected {
+    border-color: var(--color-accent);
+    background-color: var(--color-accent-subtle);
+    color: var(--color-accent);
+}
+
+/* Date Picker */
+.datePickerWrapper {
+    max-width: 250px;
+}
+
+.dateInput {
+    width: 100%;
+    height: 44px;
+    padding: 0 var(--space-4);
+    font-size: var(--text-base);
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-md);
+}
+
+/* Slots Grid */
+.slotsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: var(--space-2);
+}
+
+.slotCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: var(--space-3);
+    background-color: var(--color-bg-secondary);
+    border: 2px solid transparent;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.slotCard:hover {
+    border-color: var(--color-border);
+}
+
+.slotCard.selected {
+    border-color: var(--color-accent);
+    background-color: var(--color-accent-subtle);
+}
+
+.slotTime {
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-primary);
+}
+
+.slotStaff {
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+}
+
+/* Client */
+.clientToggle {
+    display: flex;
+    gap: var(--space-2);
+    padding: var(--space-1);
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+    width: fit-content;
+}
+
+.toggleBtn {
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-text-secondary);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.toggleBtn.active {
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-elevated);
+    box-shadow: var(--shadow-sm);
+}
+
+.clientList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.clientCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-3) var(--space-4);
+    text-align: left;
+    background-color: var(--color-bg-secondary);
+    border: 2px solid transparent;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.clientCard:hover {
+    border-color: var(--color-border);
+}
+
+.clientCard.selected {
+    border-color: var(--color-accent);
+    background-color: var(--color-accent-subtle);
+}
+
+.clientName {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-text-primary);
+}
+
+.clientPhone {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+}
+
+.newClientForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    max-width: 400px;
+}
+
+/* Summary */
+.summary {
+    margin-top: var(--space-6);
+    padding: var(--space-4);
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+}
+
+.summary h3 {
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-3);
+}
+
+.summaryItem {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--space-2) 0;
+    font-size: var(--text-sm);
+    border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.summaryItem:last-child {
+    border-bottom: none;
+}
+
+.summaryItem span {
+    color: var(--color-text-secondary);
+}
+
+.summaryItem strong {
+    color: var(--color-text-primary);
+}
+
+/* Actions */
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+    .actions {
+        flex-direction: column-reverse;
+    }
+
+    .actions button {
+        width: 100%;
+    }
+}
+
+/* Empty State */
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-8);
+    text-align: center;
+    color: var(--color-text-secondary);
+}
+
+.emptyState a,
+.emptyState button {
+    color: var(--color-accent);
+    text-decoration: underline;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Loading */
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-12);
+    color: var(--color-text-secondary);
+}
