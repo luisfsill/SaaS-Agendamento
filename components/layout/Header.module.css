@@ -1,0 +1,194 @@
+.header {
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--space-6);
+    background-color: var(--color-bg-primary);
+    border-bottom: 1px solid var(--color-border-subtle);
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+    gap: var(--space-4);
+}
+
+.headerLeft {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex: 1;
+    min-width: 0;
+}
+
+.menuButton {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    color: var(--color-text-primary);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.menuButton:hover {
+    background-color: var(--color-bg-secondary);
+}
+
+.menuButton:active {
+    background-color: var(--color-bg-tertiary);
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 0 var(--space-4);
+    }
+
+    .menuButton {
+        display: flex;
+    }
+
+    .homeButton {
+        display: flex;
+    }
+}
+
+.homeButton {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    color: var(--color-text-secondary);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.homeButton:hover {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+}
+
+.searchWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+@media (max-width: 640px) {
+    .searchWrapper {
+        display: none;
+    }
+}
+
+.searchIcon {
+    position: absolute;
+    left: var(--space-3);
+    color: var(--color-text-tertiary);
+    pointer-events: none;
+}
+
+.searchInput {
+    width: 100%;
+    height: 36px;
+    padding: 0 var(--space-10) 0 calc(var(--space-3) + 24px);
+    font-size: var(--text-sm);
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+}
+
+.searchInput::placeholder {
+    color: var(--color-text-tertiary);
+}
+
+.searchInput:focus {
+    outline: none;
+    background-color: var(--color-bg-primary);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px var(--color-accent-subtle);
+}
+
+.searchShortcut {
+    position: absolute;
+    right: var(--space-3);
+    padding: 2px 6px;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: var(--color-text-tertiary);
+    background-color: var(--color-bg-tertiary);
+    border-radius: var(--radius-xs);
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.iconButton {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    color: var(--color-text-secondary);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.iconButton:hover {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+}
+
+.notificationBadge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-error);
+    border-radius: 50%;
+    border: 2px solid var(--color-bg-primary);
+}
+
+.userMenu {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding-left: var(--space-2);
+    border-left: 1px solid var(--color-border-subtle);
+    margin-left: var(--space-2);
+}
+
+.avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: white;
+    background: linear-gradient(135deg, var(--color-accent) 0%, #6366f1 100%);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+}

@@ -1,0 +1,322 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+}
+
+.title {
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-1);
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: var(--text-2xl);
+    }
+}
+
+.subtitle {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+}
+
+@media (min-width: 1024px) {
+    .content {
+        grid-template-columns: 350px 1fr;
+    }
+}
+
+/* Calendar Card */
+.calendarCard {
+    background-color: var(--color-bg-elevated);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-xl);
+    padding: var(--space-5);
+}
+
+@media (max-width: 480px) {
+    .calendarCard {
+        padding: var(--space-3);
+    }
+}
+
+.calendarHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-4);
+}
+
+.navButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: var(--color-text-secondary);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.navButton:hover {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+}
+
+.monthYear {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.month {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-primary);
+}
+
+.year {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+}
+
+.todayButton {
+    width: 100%;
+    padding: var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-accent);
+    background-color: var(--color-accent-subtle);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    margin-bottom: var(--space-4);
+    transition: background-color var(--transition-fast);
+}
+
+.todayButton:hover {
+    background-color: var(--color-accent);
+    color: white;
+}
+
+.weekDays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: var(--space-1);
+    margin-bottom: var(--space-2);
+}
+
+.weekDay {
+    text-align: center;
+    font-size: var(--text-xs);
+    font-weight: var(--font-medium);
+    color: var(--color-text-tertiary);
+    padding: var(--space-2);
+}
+
+.daysGrid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: var(--space-1);
+}
+
+.dayEmpty {
+    aspect-ratio: 1;
+}
+
+.day {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: var(--text-sm);
+    color: var(--color-text-primary);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.day:hover {
+    background-color: var(--color-bg-secondary);
+}
+
+.day.today {
+    background-color: var(--color-accent-subtle);
+    color: var(--color-accent);
+    font-weight: var(--font-semibold);
+}
+
+.day.selected {
+    background-color: var(--color-accent);
+    color: white;
+}
+
+.dayNumber {
+    z-index: 1;
+}
+
+.dot {
+    width: 4px;
+    height: 4px;
+    background-color: var(--color-accent);
+    border-radius: 50%;
+    position: absolute;
+    bottom: 6px;
+}
+
+.day.selected .dot {
+    background-color: white;
+}
+
+/* Appointments Card */
+.appointmentsCard {
+    background-color: var(--color-bg-elevated);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+}
+
+.appointmentsHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.appointmentsTitle {
+    font-size: var(--text-base);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-primary);
+    text-transform: capitalize;
+}
+
+.appointmentsCount {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+}
+
+.emptyState {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-12);
+    color: var(--color-text-secondary);
+}
+
+.appointmentsList {
+    display: flex;
+    flex-direction: column;
+}
+
+.appointmentItem {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--color-border-subtle);
+    transition: background-color var(--transition-fast);
+}
+
+.appointmentItem:last-child {
+    border-bottom: none;
+}
+
+.appointmentItem:hover {
+    background-color: var(--color-bg-tertiary);
+}
+
+.appointmentTime {
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--color-accent);
+    min-width: 50px;
+}
+
+.appointmentInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.appointmentClient {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-text-primary);
+}
+
+.appointmentService {
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+}
+
+.statusBadge {
+    padding: 4px 8px;
+    font-size: 11px;
+    font-weight: var(--font-medium);
+    border-radius: var(--radius-full);
+}
+
+.statusBadge.confirmed {
+    color: var(--color-success);
+    background-color: var(--color-success-subtle);
+}
+
+.statusBadge.pending {
+    color: var(--color-warning);
+    background-color: var(--color-warning-subtle);
+}
+
+.statusBadge.cancelled {
+    color: var(--color-error);
+    background-color: var(--color-error-subtle);
+}
+
+/* Loading State */
+.loadingState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-8);
+    color: var(--color-text-secondary);
+}
+
+.spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--color-border-subtle);
+    border-top-color: var(--color-accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: var(--space-3);
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

@@ -1,0 +1,1 @@
+export { WhatsAppModal } from './WhatsAppModal';

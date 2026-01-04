@@ -1,0 +1,130 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+}
+
+.themeToggleWrapper {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 100;
+}
+
+.card {
+    width: 100%;
+    max-width: 480px;
+    background: var(--bg-primary);
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-color);
+    text-align: center;
+}
+
+.iconWrapper {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+}
+
+.successIcon {
+    color: var(--color-success);
+    animation: scaleIn 0.5s ease-out;
+}
+
+.sparkle1 {
+    position: absolute;
+    top: -8px;
+    right: -12px;
+    color: var(--color-warning);
+    animation: sparkle 1.5s ease-in-out infinite;
+}
+
+.sparkle2 {
+    position: absolute;
+    bottom: -4px;
+    left: -16px;
+    color: var(--color-primary);
+    animation: sparkle 1.5s ease-in-out infinite 0.3s;
+}
+
+@keyframes scaleIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes sparkle {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(0.8);
+    }
+}
+
+.title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+}
+
+.subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.featureIcon {
+    font-size: 1.25rem;
+}
+
+.buttonLink {
+    display: block;
+    text-decoration: none;
+    margin-bottom: 1rem;
+}
+
+.redirect {
+    font-size: 0.875rem;
+    color: var(--text-tertiary);
+}
+
+.redirect strong {
+    color: var(--color-primary);
+    font-weight: 600;
+}

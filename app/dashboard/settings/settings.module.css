@@ -1,0 +1,430 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.header {
+    margin-bottom: var(--space-2);
+}
+
+.title {
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-1);
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: var(--text-2xl);
+    }
+}
+
+.subtitle {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+}
+
+@media (max-width: 480px) {
+    .subtitle {
+        font-size: var(--text-sm);
+    }
+}
+
+.content {
+    display: flex;
+    gap: var(--space-6);
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .content {
+        flex-direction: column;
+        gap: var(--space-4);
+    }
+}
+
+/* Tab List */
+.tabList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    min-width: 200px;
+}
+
+@media (max-width: 768px) {
+    .tabList {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: var(--space-2);
+        min-width: 0;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        gap: var(--space-1);
+    }
+
+    .tabList::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.tab {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-text-secondary);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    text-align: left;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .tab {
+        flex-shrink: 0;
+        padding: var(--space-2) var(--space-3);
+        font-size: var(--text-sm);
+        gap: var(--space-2);
+    }
+}
+
+@media (max-width: 480px) {
+    .tab {
+        padding: var(--space-2);
+        font-size: var(--text-xs);
+    }
+
+    .tab span {
+        display: none;
+    }
+}
+
+.tab:hover {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+}
+
+.tab.active {
+    background-color: var(--color-accent-subtle);
+    color: var(--color-accent);
+}
+
+/* Tab Content */
+.tabContent {
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+}
+
+.section {
+    background-color: var(--color-bg-elevated);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 480px) {
+    .section {
+        padding: var(--space-4);
+        border-radius: var(--radius-lg);
+    }
+}
+
+.sectionTitle {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-4);
+}
+
+.sectionTitle:not(:first-child) {
+    margin-top: var(--space-6);
+}
+
+/* Form */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.actions {
+    margin-top: var(--space-6);
+    display: flex;
+    gap: var(--space-3);
+}
+
+.infoText {
+    margin-top: var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+}
+
+/* Schedule */
+.schedule {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.scheduleRow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+    .scheduleRow {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-2);
+        padding-bottom: var(--space-3);
+        border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .scheduleRow:last-child {
+        border-bottom: none;
+    }
+}
+
+.day {
+    min-width: 80px;
+    font-weight: var(--font-medium);
+    color: var(--color-text-primary);
+}
+
+@media (max-width: 480px) {
+    .day {
+        min-width: auto;
+    }
+}
+
+.timeInput {
+    height: 36px;
+    padding: 0 var(--space-3);
+    font-size: var(--text-sm);
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-md);
+}
+
+@media (max-width: 480px) {
+    .timeInput {
+        width: 100%;
+    }
+}
+
+/* Toggle List */
+.toggleList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.toggleItem {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    cursor: pointer;
+}
+
+.toggleItem input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--color-accent);
+    margin-top: 2px;
+}
+
+.toggleLabel {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-text-primary);
+    display: block;
+}
+
+.toggleDesc {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin-top: 2px;
+}
+
+/* Theme Options */
+.themeOptions {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+}
+
+.themeOption {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    border: 2px solid transparent;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    background: none;
+    transition: all var(--transition-fast);
+}
+
+.themeOption:hover {
+    border-color: var(--color-border);
+}
+
+.themeOption.active {
+    border-color: var(--color-accent);
+}
+
+.themeOption span {
+    font-size: var(--text-sm);
+    color: var(--color-text-primary);
+}
+
+.themePreview {
+    width: 80px;
+    height: 50px;
+    background-color: #f5f5f7;
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-md);
+}
+
+.themePreview.dark {
+    background-color: #1c1c1e;
+}
+
+.themePreviewSplit {
+    display: flex;
+    width: 80px;
+    height: 50px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--color-border-subtle);
+}
+
+.themePreviewLight {
+    flex: 1;
+    background-color: #f5f5f7;
+}
+
+.themePreviewDark {
+    flex: 1;
+    background-color: #1c1c1e;
+}
+
+/* Integrations */
+.integrationCard {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--space-3);
+    flex-wrap: wrap;
+}
+
+@media (max-width: 480px) {
+    .integrationCard {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: var(--space-3);
+    }
+}
+
+.integrationIcon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    background-color: var(--color-bg-tertiary);
+    color: var(--color-text-secondary);
+    flex-shrink: 0;
+}
+
+.integrationIcon.whatsappIcon {
+    background-color: #25D366;
+    color: white;
+}
+
+.integrationInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+@media (max-width: 480px) {
+    .integrationInfo {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.integrationName {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-text-primary);
+    display: block;
+}
+
+.integrationStatus {
+    font-size: var(--text-sm);
+    color: var(--color-success);
+}
+
+.integrationStatusDisconnected {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+}
+
+.integrationStatusLoading {
+    font-size: var(--text-sm);
+    color: var(--color-warning, #f59e0b);
+}
+
+/* Loading State */
+.loadingState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-12);
+    text-align: center;
+    color: var(--color-text-secondary);
+}
+
+.spinner {
+    animation: spin 0.8s linear infinite;
+    margin-bottom: var(--space-4);
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

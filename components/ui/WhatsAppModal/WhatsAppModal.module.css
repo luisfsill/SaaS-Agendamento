@@ -1,0 +1,586 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal {
+  background: var(--color-bg-secondary);
+  border-radius: 16px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.headerTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.headerTitle svg {
+  color: #25D366;
+}
+
+.headerTitle h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton:hover {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text);
+}
+
+.content {
+  padding: 1.5rem;
+}
+
+/* Status Section */
+.statusSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: var(--color-bg-tertiary);
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.statusBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.statusConnected {
+  background: rgba(37, 211, 102, 0.15);
+  color: #25D366;
+}
+
+.statusConnecting {
+  background: rgba(255, 193, 7, 0.15);
+  color: #FFC107;
+}
+
+.statusDisconnected {
+  background: rgba(239, 68, 68, 0.15);
+  color: #EF4444;
+}
+
+.statusIcon {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.statusConnected .statusIcon {
+  background: #25D366;
+}
+
+.statusConnecting .statusIcon {
+  background: #FFC107;
+}
+
+.statusDisconnected .statusIcon {
+  background: #EF4444;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.profilePic {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #25D366;
+}
+
+.profilePlaceholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--color-bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary);
+}
+
+.profileName {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.profilePhone {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+/* QR Code Section */
+.qrSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: var(--color-bg-tertiary);
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.qrCode {
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+.qrCode img {
+  width: 200px;
+  height: 200px;
+  display: block;
+}
+
+.qrInstructions {
+  text-align: center;
+}
+
+.qrInstructions p {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 0.5rem 0;
+}
+
+.qrInstructions ol {
+  text-align: left;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  padding-left: 1.5rem;
+  margin: 0;
+}
+
+.qrInstructions li {
+  margin-bottom: 0.25rem;
+}
+
+.pairCode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pairCode span {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.pairCodeValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: monospace;
+  color: #25D366;
+  letter-spacing: 0.2em;
+  background: var(--color-bg-secondary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+}
+
+/* Loading */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+  color: #25D366;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loadingText {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  width: 100%;
+}
+
+.actionButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.connectButton {
+  background: #25D366;
+  color: white;
+}
+
+.connectButton:hover:not(:disabled) {
+  background: #20BD5A;
+}
+
+.disconnectButton {
+  background: var(--color-bg-tertiary);
+  color: #EF4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.disconnectButton:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.testButton {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.testButton:hover:not(:disabled) {
+  background: var(--color-bg-secondary);
+  border-color: var(--color-primary);
+}
+
+.deleteButton {
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+}
+
+.deleteButton:hover:not(:disabled) {
+  color: #EF4444;
+}
+
+/* Error */
+.error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  color: #EF4444;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+/* No Instance */
+.noInstance {
+  text-align: center;
+  padding: 2rem;
+}
+
+.noInstance svg {
+  color: var(--color-text-secondary);
+  margin-bottom: 1rem;
+}
+
+.noInstance h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 0.5rem 0;
+}
+
+.noInstance p {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 1.5rem 0;
+}
+
+/* Footer info */
+.footerInfo {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.footerInfo a {
+  color: #25D366;
+  text-decoration: none;
+}
+
+.footerInfo a:hover {
+  text-decoration: underline;
+}
+
+/* Refresh button */
+.refreshButton {
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.refreshButton:hover {
+  color: var(--color-text);
+  background: var(--color-bg-tertiary);
+}
+
+.refreshButton.spinning svg {
+  animation: spin 1s linear infinite;
+}
+
+/* Webhook Section */
+.webhookSection {
+  margin-top: 1.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.webhookHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background: var(--color-bg-tertiary);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.webhookHeader:hover {
+  background: var(--color-bg-secondary);
+}
+
+.webhookTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.webhookToggle {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.webhookContent {
+  padding: 1rem;
+  background: var(--color-bg-secondary);
+  border-top: 1px solid var(--color-border);
+}
+
+.webhookHelp {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 1rem 0;
+}
+
+.webhookField {
+  margin-bottom: 1rem;
+}
+
+.webhookField label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+}
+
+.webhookInput {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--color-text);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.webhookInput:focus {
+  border-color: #25D366;
+}
+
+.webhookInput::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.webhookStatus {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(37, 211, 102, 0.1);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: #25D366;
+  margin-bottom: 1rem;
+  word-break: break-all;
+}
+
+.webhookActions {
+  margin-bottom: 1rem;
+}
+
+.webhookInfo {
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.webhookInfo strong {
+  color: var(--color-text);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.tokenDisplay {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.tokenDisplay code {
+  flex: 1;
+  padding: 0.5rem;
+  background: var(--color-bg-tertiary);
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.7rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.copyButton {
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.copyButton:hover {
+  color: #25D366;
+  background: var(--color-bg-tertiary);
+}
+
+.webhookHint {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.webhookHint code {
+  padding: 0.1rem 0.3rem;
+  background: var(--color-bg-tertiary);
+  border-radius: 3px;
+  font-family: monospace;
+}

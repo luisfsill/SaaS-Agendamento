@@ -1,0 +1,239 @@
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4);
+    padding-top: 80px;
+    background-color: var(--color-bg-secondary);
+    position: relative;
+}
+
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 var(--space-6);
+    background-color: var(--color-bg-primary);
+    border-bottom: 1px solid var(--color-border);
+    z-index: 100;
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 0 var(--space-4);
+    }
+}
+
+.navLogo {
+    display: none;
+    align-items: center;
+    gap: var(--space-2);
+    text-decoration: none;
+    flex: 1;
+    min-width: 0;
+}
+
+.navCenter {
+    flex: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--space-2) var(--space-3);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.navCenter:hover {
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-secondary);
+}
+
+@media (max-width: 480px) {
+    .navCenter {
+        padding: var(--space-2);
+    }
+}
+
+.navActions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex: none;
+    justify-content: flex-end;
+    position: absolute;
+    right: var(--space-6);
+}
+
+@media (max-width: 480px) {
+    .navActions {
+        gap: var(--space-2);
+    }
+}
+
+.navLogoIcon {
+    font-size: 24px;
+}
+
+.navLogoText {
+    font-size: var(--text-lg);
+    font-weight: var(--font-bold);
+    color: var(--color-text-primary);
+}
+
+.navLink {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+}
+
+.navLink:hover {
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-secondary);
+}
+
+@media (max-width: 480px) {
+    .navLink {
+        padding: var(--space-2);
+    }
+    
+    .navLink span {
+        display: none;
+    }
+}
+
+.card {
+    width: 100%;
+    max-width: 400px;
+    background-color: var(--color-bg-primary);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    padding: var(--space-8);
+    animation: slideUp 0.3s ease-out;
+}
+
+@media (max-width: 480px) {
+    .card {
+        padding: var(--space-6);
+        border-radius: var(--radius-lg);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.header {
+    text-align: center;
+    margin-bottom: var(--space-6);
+}
+
+.title {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-2);
+}
+
+.subtitle {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.errorBanner {
+    padding: var(--space-3);
+    background-color: var(--color-error-subtle);
+    color: var(--color-error);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    text-align: center;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.forgotLink {
+    font-size: var(--text-sm);
+    color: var(--color-accent);
+    text-decoration: none;
+}
+
+.forgotLink:hover {
+    text-decoration: underline;
+}
+
+.demoLink {
+    font-size: var(--text-sm);
+    color: var(--color-accent);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 0;
+    transition: all 0.2s ease;
+}
+
+.demoLink:hover {
+    text-decoration: underline;
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: var(--space-6);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border);
+}
+
+.footerText {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+}
+
+.registerLink {
+    font-size: var(--text-sm);
+    color: var(--color-accent);
+    font-weight: var(--font-medium);
+    text-decoration: none;
+}
+
+.registerLink:hover {
+    text-decoration: underline;
+}
