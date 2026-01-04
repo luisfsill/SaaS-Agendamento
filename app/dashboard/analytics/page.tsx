@@ -78,8 +78,13 @@ export default function AnalyticsPage() {
         fetchAnalytics();
     }, [period]);
 
-    const formatCurrency = (value: number) => {
-        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+    const formatCurrency = (value: number | undefined | null) => {
+        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value ?? 0);
+    };
+
+    const formatChange = (value: number | undefined | null) => {
+        const num = value ?? 0;
+        return `${num >= 0 ? '+' : ''}${num.toFixed(1)}%`;
     };
 
     const maxRevenue = revenueData.length > 0 ? Math.max(...revenueData.map(d => d.value)) : 1;
@@ -89,29 +94,29 @@ export default function AnalyticsPage() {
         { 
             label: 'Receita Total', 
             value: formatCurrency(summary.total_revenue), 
-            change: `${summary.revenue_change >= 0 ? '+' : ''}${summary.revenue_change.toFixed(1)}%`, 
-            positive: summary.revenue_change >= 0, 
+            change: formatChange(summary.revenue_change), 
+            positive: (summary.revenue_change ?? 0) >= 0, 
             icon: DollarSign 
         },
         { 
             label: 'Agendamentos', 
-            value: summary.total_appointments.toString(), 
-            change: `${summary.appointments_change >= 0 ? '+' : ''}${summary.appointments_change.toFixed(1)}%`, 
-            positive: summary.appointments_change >= 0, 
+            value: (summary.total_appointments ?? 0).toString(), 
+            change: formatChange(summary.appointments_change), 
+            positive: (summary.appointments_change ?? 0) >= 0, 
             icon: Calendar 
         },
         { 
             label: 'Novos Clientes', 
-            value: summary.new_clients.toString(), 
-            change: `${summary.new_clients_change >= 0 ? '+' : ''}${summary.new_clients_change.toFixed(1)}%`, 
-            positive: summary.new_clients_change >= 0, 
+            value: (summary.new_clients ?? 0).toString(), 
+            change: formatChange(summary.new_clients_change), 
+            positive: (summary.new_clients_change ?? 0) >= 0, 
             icon: Users 
         },
         { 
             label: 'Taxa de Ocupação', 
-            value: `${summary.occupancy_rate.toFixed(1)}%`, 
-            change: `${summary.occupancy_change >= 0 ? '+' : ''}${summary.occupancy_change.toFixed(1)}%`, 
-            positive: summary.occupancy_change >= 0, 
+            value: `${(summary.occupancy_rate ?? 0).toFixed(1)}%`, 
+            change: formatChange(summary.occupancy_change), 
+            positive: (summary.occupancy_change ?? 0) >= 0, 
             icon: Clock 
         },
     ] : [];
