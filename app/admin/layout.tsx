@@ -15,72 +15,28 @@ const adminMenuItems = [
   { href: '/admin/settings', icon: Settings, label: 'Configurações' },
 ];
 
-// Lista de emails de administradores do sistema
-// Em produção, isso viria do backend
-const SYSTEM_ADMINS = ['admin@admin.com', 'admin@ritmo.com'];
-
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { user, isLoading, isLoggedIn, logout } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
-  const [authorized, setAuthorized] = useState(false);
-  const [checking, setChecking] = useState(true);
 
+  // Apenas verifica se está logado, a autorização é feita pelo backend
   useEffect(() => {
-    // Aguardar o carregamento terminar
-    if (isLoading) return;
-
-    // Em desenvolvimento, permite qualquer usuário logado
-    // Verifica pela porta 3000 (dev) ou variável de ambiente
-    const isDev = process.env.NODE_ENV === 'development' || 
-                  window.location.port === '3000';
-
-    // Se não está logado
-    if (!isLoggedIn && !user) {
-      // Em dev, não redireciona imediatamente - pode estar carregando
-      if (!isDev) {
-        router.push('/login');
-      }
-      setChecking(false);
-      return;
+    if (!isLoading && !isLoggedIn) {
+      router.push('/login');
     }
+  }, [isLoading, isLoggedIn, router]);
 
-    // Se tem usuário, verificar permissões
-    if (user) {
-      const isSystemAdmin = isDev || SYSTEM_ADMINS.includes(user.email || '');
-      
-      if (!isSystemAdmin) {
-        router.push('/dashboard');
-        return;
-      }
-
-      setAuthorized(true);
-    }
-    
-    setChecking(false);
-  }, [user, isLoading, isLoggedIn, router]);
-
-  // Em desenvolvimento, se não está carregando e não tem user, mostrar mesmo assim
-  useEffect(() => {
-    const isDev = process.env.NODE_ENV === 'development' || 
-                  (typeof window !== 'undefined' && window.location.port === '3000');
-    
-    if (isDev && !isLoading && !checking && !authorized) {
-      // Em dev, autorizar mesmo sem user para debug
-      setAuthorized(true);
-    }
-  }, [isLoading, checking, authorized]);
-
-  if (isLoading || checking) {
+  if (isLoading) {
     return (
       <div className={styles.loadingContainer}>
         <div className={styles.spinner} />
-        <p>Verificando permissões...</p>
+        <p>Carregando...</p>
       </div>
     );
   }
 
-  if (!authorized) {
+  if (!isLoggedIn) {
     return (
       <div className={styles.loadingContainer}>
         <div className={styles.spinner} />
