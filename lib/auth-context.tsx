@@ -27,7 +27,7 @@ interface AuthProviderProps {
 }
 
 // Helper para extrair dados do JWT
-const parseJwt = (token: string): { sub: string; tenant_id: string; email?: string; name?: string; business_name?: string } | null => {
+const parseJwt = (token: string): { sub: string; tenant_id: string; email?: string; name?: string; full_name?: string; business_name?: string } | null => {
     try {
         const base64Url = token.split('.')[1];
         const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -56,10 +56,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
         const payload = parseJwt(token);
         if (!payload) return null;
 
+        // Tenta pegar o nome de várias fontes: name, full_name, ou extrai do email
+        const userName = payload.name || payload.full_name || payload.email?.split('@')[0] || 'Usuário';
+
         return {
             id: payload.sub,
             email: payload.email || '',
-            name: payload.name || payload.email?.split('@')[0] || 'Usuário',
+            name: userName,
             tenant_id: payload.tenant_id,
             business_name: payload.business_name,
         };
