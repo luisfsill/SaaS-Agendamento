@@ -1,0 +1,18 @@
+{
+  "name": "Ritmo Agendamento",
+  "short_name": "Ritmo",
+  "description": "Sistema de agendamento inteligente com IA via WhatsApp",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#007aff",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
