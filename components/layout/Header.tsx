@@ -1,7 +1,9 @@
 'use client';
 
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { Bell, Search, Menu, Home } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Bell, Search, Menu, Home, Settings, LogOut } from 'lucide-react';
 import { ThemeToggle } from '@/components/ui';
 import { useAuth } from '@/lib/auth-context';
 import styles from './Header.module.css';
@@ -11,7 +13,38 @@ interface HeaderProps {
 }
 
 export function Header({ onMenuClick }: HeaderProps) {
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
+    const router = useRouter();
+    const [menuOpen, setMenuOpen] = useState(false);
+    const menuRef = useRef<HTMLDivElement>(null);
+
+    // Fecha o menu ao clicar fora
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                setMenuOpen(false);
+            }
+        };
+
+        if (menuOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [menuOpen]);
+
+    const handleLogout = async () => {
+        setMenuOpen(false);
+        await logout();
+        router.push('/login');
+    };
+
+    const handleSettings = () => {
+        setMenuOpen(false);
+        router.push('/dashboard/settings');
+    };
 
     return (
         <header className={styles.header}>
@@ -47,10 +80,33 @@ export function Header({ onMenuClick }: HeaderProps) {
 
                 <ThemeToggle />
 
-                <div className={styles.userMenu}>
-                    <div className={styles.avatar}>
+                <div className={styles.userMenu} ref={menuRef}>
+                    <button 
+                        className={styles.avatar}
+                        onClick={() => setMenuOpen(!menuOpen)}
+                        aria-label="Menu do usuário"
+                        aria-expanded={menuOpen}
+                    >
                         {user?.name?.charAt(0).toUpperCase() || 'U'}
-                    </div>
+                    </button>
+
+                    {menuOpen && (
+                        <div className={styles.dropdown}>
+                            <div className={styles.dropdownHeader}>
+                                <span className={styles.dropdownName}>{user?.name || 'Usuário'}</span>
+                                <span className={styles.dropdownEmail}>{user?.email || ''}</span>
+                            </div>
+                            <div className={styles.dropdownDivider} />
+                            <button className={styles.dropdownItem} onClick={handleSettings}>
+                                <Settings size={16} />
+                                <span>Configurações</span>
+                            </button>
+                            <button className={styles.dropdownItem} onClick={handleLogout}>
+                                <LogOut size={16} />
+                                <span>Sair</span>
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </header>

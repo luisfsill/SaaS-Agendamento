@@ -171,6 +171,7 @@
 }
 
 .userMenu {
+    position: relative;
     display: flex;
     align-items: center;
     gap: var(--space-2);
@@ -191,4 +192,85 @@
     background: linear-gradient(135deg, var(--color-accent) 0%, #6366f1 100%);
     border-radius: var(--radius-full);
     cursor: pointer;
+    border: none;
+    transition: all var(--transition-fast);
+}
+
+.avatar:hover {
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(0, 122, 255, 0.4);
+}
+
+/* Dropdown Menu */
+.dropdown {
+    position: absolute;
+    top: calc(100% + var(--space-2));
+    right: 0;
+    min-width: 200px;
+    background-color: var(--color-bg-elevated);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    z-index: var(--z-dropdown);
+    animation: dropdownIn 0.15s ease-out;
+    overflow: hidden;
+}
+
+@keyframes dropdownIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdownHeader {
+    padding: var(--space-3) var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.dropdownName {
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--color-text-primary);
+}
+
+.dropdownEmail {
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+}
+
+.dropdownDivider {
+    height: 1px;
+    background-color: var(--color-border-subtle);
+    margin: 0;
+}
+
+.dropdownItem {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-align: left;
+}
+
+.dropdownItem:hover {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+}
+
+.dropdownItem:last-child:hover {
+    color: var(--color-error);
 }
