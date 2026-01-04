@@ -371,6 +371,11 @@
     color: white;
 }
 
+.integrationIcon.googleIcon {
+    background: linear-gradient(135deg, #4285F4, #34A853, #FBBC05, #EA4335);
+    color: white;
+}
+
 .integrationInfo {
     flex: 1;
     min-width: 0;

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { User, Building2, Bell, Palette, Link2, Shield, Save, Loader2, MessageCircle } from 'lucide-react';
+import { User, Building2, Bell, Palette, Link2, Shield, Save, Loader2, MessageCircle, Calendar } from 'lucide-react';
 import { Button, Input } from '@/components/ui';
 import { WhatsAppModal } from '@/components/ui/WhatsAppModal';
 import { useTheme } from '@/lib/theme-context';
@@ -30,6 +30,11 @@ interface TenantProfile {
     address: { street?: string; city?: string } | null;
 }
 
+interface GoogleCalendarStatus {
+    connected: boolean;
+    email?: string;
+}
+
 export default function SettingsPage() {
     const [activeTab, setActiveTab] = useState<Tab>('profile');
     const { theme, setTheme } = useTheme();
@@ -38,6 +43,8 @@ export default function SettingsPage() {
     const [loading, setLoading] = useState(true);
     const [whatsappModalOpen, setWhatsappModalOpen] = useState(false);
     const [whatsappStatus, setWhatsappStatus] = useState<'connected' | 'disconnected' | 'loading'>('loading');
+    const [googleCalendarStatus, setGoogleCalendarStatus] = useState<GoogleCalendarStatus>({ connected: false });
+    const [googleCalendarLoading, setGoogleCalendarLoading] = useState(false);
     
     // Business state (from /tenants/profile)
     const [tenantProfile, setTenantProfile] = useState<TenantProfile | null>(null);
@@ -63,6 +70,14 @@ export default function SettingsPage() {
                 } else {
                     setWhatsappStatus('disconnected');
                 }
+
+                // Verifica status do Google Calendar
+                try {
+                    const calendarStatus = await api.get<GoogleCalendarStatus>('/integrations/google-calendar/status');
+                    setGoogleCalendarStatus(calendarStatus);
+                } catch {
+                    setGoogleCalendarStatus({ connected: false });
+                }
             } catch (err) {
                 console.error('Erro ao carregar configurações:', err);
             } finally {
@@ -71,7 +86,20 @@ export default function SettingsPage() {
         };
 
         fetchData();
-    }, [whatsappModalOpen]); // Recarrega quando fechar o modal
+
+        // Verifica se voltou do OAuth do Google
+        const urlParams = new URLSearchParams(window.location.search);
+        const googleCallback = urlParams.get('google_calendar');
+        if (googleCallback === 'success') {
+            setGoogleCalendarStatus({ connected: true });
+            setActiveTab('integrations');
+            // Limpa o parâmetro da URL
+            window.history.replaceState({}, '', window.location.pathname);
+        } else if (googleCallback === 'error') {
+            alert('Erro ao conectar com Google Calendar. Tente novamente.');
+            window.history.replaceState({}, '', window.location.pathname);
+        }
+    }, [whatsappModalOpen]);
 
     const handleSaveBusiness = async () => {
         if (!tenantProfile) return;
@@ -93,6 +121,39 @@ export default function SettingsPage() {
             }
         } finally {
             setIsSaving(false);
+        }
+    };
+
+    const handleConnectGoogleCalendar = async () => {
+        setGoogleCalendarLoading(true);
+        try {
+            // Obtém a URL de autorização do backend
+            const response = await api.get<{ auth_url: string }>('/integrations/google-calendar/auth-url');
+            // Redireciona para o Google OAuth
+            window.location.href = response.auth_url;
+        } catch (err) {
+            const apiError = err as ApiError;
+            if (apiError.status === 404) {
+                alert('Integração com Google Calendar ainda não está configurada no servidor. Entre em contato com o suporte.');
+            } else {
+                alert('Erro ao iniciar conexão com Google Calendar. Tente novamente.');
+            }
+            setGoogleCalendarLoading(false);
+        }
+    };
+
+    const handleDisconnectGoogleCalendar = async () => {
+        if (!confirm('Tem certeza que deseja desconectar o Google Calendar?')) return;
+        
+        setGoogleCalendarLoading(true);
+        try {
+            await api.post('/integrations/google-calendar/disconnect', {});
+            setGoogleCalendarStatus({ connected: false });
+            alert('Google Calendar desconectado com sucesso!');
+        } catch (err) {
+            alert('Erro ao desconectar Google Calendar. Tente novamente.');
+        } finally {
+            setGoogleCalendarLoading(false);
         }
     };
 
@@ -272,12 +333,38 @@ export default function SettingsPage() {
                             </div>
                             <h2 className={styles.sectionTitle}>Calendário</h2>
                             <div className={styles.integrationCard}>
-                                <div className={styles.integrationIcon}>📅</div>
+                                <div className={`${styles.integrationIcon} ${styles.googleIcon}`}>
+                                    <Calendar size={24} />
+                                </div>
                                 <div className={styles.integrationInfo}>
                                     <span className={styles.integrationName}>Google Calendar</span>
-                                    <span className={styles.integrationStatusDisconnected}>Não conectado</span>
+                                    {googleCalendarStatus.connected ? (
+                                        <span className={styles.integrationStatus}>
+                                            Conectado {googleCalendarStatus.email && `(${googleCalendarStatus.email})`}
+                                        </span>
+                                    ) : (
+                                        <span className={styles.integrationStatusDisconnected}>Não conectado</span>
+                                    )}
                                 </div>
-                                <Button variant="primary" size="sm">Conectar</Button>
+                                {googleCalendarStatus.connected ? (
+                                    <Button 
+                                        variant="secondary" 
+                                        size="sm"
+                                        onClick={handleDisconnectGoogleCalendar}
+                                        isLoading={googleCalendarLoading}
+                                    >
+                                        Desconectar
+                                    </Button>
+                                ) : (
+                                    <Button 
+                                        variant="primary" 
+                                        size="sm"
+                                        onClick={handleConnectGoogleCalendar}
+                                        isLoading={googleCalendarLoading}
+                                    >
+                                        Conectar
+                                    </Button>
+                                )}
                             </div>
                         </div>
                     )}
