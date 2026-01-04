@@ -2,10 +2,13 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 // Routes that don't require authentication
-const publicRoutes = ['/', '/login', '/register', '/forgot-password', '/terms', '/privacy'];
+const publicRoutes = ['/', '/login', '/register', '/forgot-password', '/terms', '/privacy', '/privacy-policy', '/terms-of-service'];
 
 // Routes that should redirect to dashboard if already authenticated
 const authRoutes = ['/login', '/register', '/forgot-password'];
+
+// Admin routes have their own authentication (via X-Admin-Token)
+const adminRoutes = ['/admin'];
 
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
@@ -21,6 +24,14 @@ export function middleware(request: NextRequest) {
 
     // Check if current route is an auth route (login, register)
     const isAuthRoute = authRoutes.some(route => pathname === route);
+
+    // Check if current route is admin (has its own auth)
+    const isAdminRoute = adminRoutes.some(route => pathname.startsWith(route));
+
+    // Admin routes bypass normal auth - they use X-Admin-Token
+    if (isAdminRoute) {
+        return NextResponse.next();
+    }
 
     // If authenticated and trying to access auth routes, redirect to dashboard
     if (isAuthenticated && isAuthRoute) {
