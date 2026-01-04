@@ -1,11 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/lib/auth-context';
+import { useRouter, usePathname } from 'next/navigation';
 import { Settings, Users, Building2, LayoutDashboard, LogOut, ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { isAdminAuthenticated, clearAdminToken } from '@/lib/admin-api';
 import styles from './admin.module.css';
 
 const adminMenuItems = [
@@ -16,16 +15,40 @@ const adminMenuItems = [
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const { user, isLoading, isLoggedIn, logout } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Apenas verifica se está logado, a autorização é feita pelo backend
+  // Se estiver na página de login, renderiza sem verificação
+  const isLoginPage = pathname === '/admin/login';
+
   useEffect(() => {
-    if (!isLoading && !isLoggedIn) {
-      router.push('/login');
+    if (isLoginPage) {
+      setIsLoading(false);
+      setIsAuthorized(true);
+      return;
     }
-  }, [isLoading, isLoggedIn, router]);
+
+    // Verifica se tem token de admin
+    if (!isAdminAuthenticated()) {
+      router.push('/admin/login');
+      return;
+    }
+
+    setIsAuthorized(true);
+    setIsLoading(false);
+  }, [pathname, router, isLoginPage]);
+
+  const handleLogout = () => {
+    clearAdminToken();
+    router.push('/admin/login');
+  };
+
+  // Se estiver na página de login, renderiza apenas o children
+  if (isLoginPage) {
+    return <>{children}</>;
+  }
 
   if (isLoading) {
     return (
@@ -36,7 +59,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     );
   }
 
-  if (!isLoggedIn) {
+  if (!isAuthorized) {
     return (
       <div className={styles.loadingContainer}>
         <div className={styles.spinner} />
@@ -75,9 +98,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <ChevronLeft size={18} />
             Voltar ao SaaS
           </Link>
-          <button onClick={logout} className={styles.logoutButton}>
+          <button onClick={handleLogout} className={styles.logoutButton}>
             <LogOut size={18} />
-            Sair
+            Sair do Admin
           </button>
         </div>
       </aside>
@@ -86,7 +109,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <header className={styles.header}>
           <div className={styles.headerInfo}>
             <span className={styles.welcomeText}>Painel Administrativo</span>
-            <span className={styles.userEmail}>{user?.email}</span>
+            <span className={styles.userEmail}>Acesso via Token</span>
           </div>
         </header>
         <div className={styles.content}>
