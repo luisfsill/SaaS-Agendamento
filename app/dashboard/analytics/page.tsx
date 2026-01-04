@@ -63,10 +63,11 @@ export default function AnalyticsPage() {
                     api.get<AnalyticsSummary>(`/dashboard/summary?days=${days}`).catch(() => null)
                 ]);
 
-                setRevenueData(revenueRes || []);
-                setOccupancyData(occupancyRes || []);
-                setTopServices(serviceMixRes || []);
-                setSummary(summaryRes);
+                // Garante que são arrays (API pode retornar objeto ou null)
+                setRevenueData(Array.isArray(revenueRes) ? revenueRes : []);
+                setOccupancyData(Array.isArray(occupancyRes) ? occupancyRes : []);
+                setTopServices(Array.isArray(serviceMixRes) ? serviceMixRes : []);
+                setSummary(summaryRes && typeof summaryRes === 'object' ? summaryRes : null);
             } catch (err) {
                 const error = err as { message?: string; status?: number };
                 console.error('Erro ao carregar analytics:', error.status === 0 ? 'Serviço fora do ar' : err);
