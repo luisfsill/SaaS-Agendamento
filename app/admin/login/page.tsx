@@ -370,7 +370,7 @@ export default function AdminLoginPage() {
                 <p className={styles.hint}>
                     {mode === 'credentials' 
                         ? 'Use suas credenciais de administrador da plataforma.'
-                        : <>O token é configurado na variável de ambiente<br /><code>PLATFORM_ADMIN_TOKEN</code> do backend</>
+                        : 'Digite seu token de acesso'
                     }
                 </p>
             </div>
