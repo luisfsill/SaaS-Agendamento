@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { Settings, Users, Building2, LayoutDashboard, LogOut, ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
-import { isAdminAuthenticated, clearAdminToken } from '@/lib/admin-api';
+import { isAdminAuthenticated, logoutAdmin, getAdminUser, getAdminSession } from '@/lib/admin-api';
 import styles from './admin.module.css';
 
 const adminMenuItems = [
@@ -19,6 +19,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const pathname = usePathname();
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [userDisplay, setUserDisplay] = useState('');
 
   // Se estiver na página de login, renderiza sem verificação
   const isLoginPage = pathname === '/admin/login';
@@ -30,18 +31,27 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       return;
     }
 
-    // Verifica se tem token de admin
+    // Verifica se tem sessão de admin
     if (!isAdminAuthenticated()) {
       router.push('/admin/login');
       return;
+    }
+
+    // Define o display do usuário
+    const session = getAdminSession();
+    const user = getAdminUser();
+    if (user) {
+      setUserDisplay(user.email);
+    } else if (session?.type === 'legacy') {
+      setUserDisplay('Acesso via Token');
     }
 
     setIsAuthorized(true);
     setIsLoading(false);
   }, [pathname, router, isLoginPage]);
 
-  const handleLogout = () => {
-    clearAdminToken();
+  const handleLogout = async () => {
+    await logoutAdmin();
     router.push('/admin/login');
   };
 
@@ -109,7 +119,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <header className={styles.header}>
           <div className={styles.headerInfo}>
             <span className={styles.welcomeText}>Painel Administrativo</span>
-            <span className={styles.userEmail}>Acesso via Token</span>
+            <span className={styles.userEmail}>{userDisplay}</span>
           </div>
         </header>
         <div className={styles.content}>

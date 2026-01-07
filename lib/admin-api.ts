@@ -1,30 +1,221 @@
 /**
  * Admin API Client
- * Handles all admin HTTP requests with the X-Admin-Token header
+ * Supports both JWT-based auth (email/password) and legacy token auth (X-Admin-Token)
  */
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_RITMO_API_URL;
 
-// Token management
-export function getAdminToken(): string | null {
-    if (typeof window === 'undefined') return null;
-    return localStorage.getItem('ritmo_admin_token');
+// Types
+export interface PlatformUser {
+    id: string;
+    email: string;
+    full_name: string;
+    role: string;
+    is_active: boolean;
+    must_change_password: boolean;
+    password_changed_at: string | null;
+    last_login_at: string | null;
+    created_at: string;
 }
 
-export function setAdminToken(token: string): void {
-    if (typeof window !== 'undefined') {
-        localStorage.setItem('ritmo_admin_token', token);
+export interface LoginResponse {
+    must_change_password: boolean;
+    user: PlatformUser;
+    access_token?: string;
+    refresh_token?: string;
+    password_change_token?: string;
+}
+
+export interface AdminSession {
+    type: 'jwt' | 'legacy';
+    accessToken?: string;
+    refreshToken?: string;
+    legacyToken?: string;
+    user?: PlatformUser;
+}
+
+// Session management
+const ADMIN_SESSION_KEY = 'ritmo_admin_session';
+
+export function getAdminSession(): AdminSession | null {
+    if (typeof window === 'undefined') return null;
+    const data = localStorage.getItem(ADMIN_SESSION_KEY);
+    if (!data) return null;
+    try {
+        return JSON.parse(data) as AdminSession;
+    } catch {
+        return null;
     }
 }
 
-export function clearAdminToken(): void {
+export function setAdminSession(session: AdminSession): void {
     if (typeof window !== 'undefined') {
-        localStorage.removeItem('ritmo_admin_token');
+        localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify(session));
+    }
+}
+
+export function clearAdminSession(): void {
+    if (typeof window !== 'undefined') {
+        localStorage.removeItem(ADMIN_SESSION_KEY);
+        localStorage.removeItem('ritmo_admin_token'); // Legacy cleanup
     }
 }
 
 export function isAdminAuthenticated(): boolean {
-    return !!getAdminToken();
+    const session = getAdminSession();
+    if (!session) return false;
+    if (session.type === 'jwt') return !!session.accessToken;
+    if (session.type === 'legacy') return !!session.legacyToken;
+    return false;
+}
+
+export function getAdminUser(): PlatformUser | null {
+    const session = getAdminSession();
+    return session?.user || null;
+}
+
+// Legacy token functions (for backwards compatibility)
+export function getAdminToken(): string | null {
+    const session = getAdminSession();
+    if (session?.type === 'legacy') return session.legacyToken || null;
+    return null;
+}
+
+export function setAdminToken(token: string): void {
+    setAdminSession({ type: 'legacy', legacyToken: token });
+}
+
+export function clearAdminToken(): void {
+    clearAdminSession();
+}
+
+// Auth functions
+export async function loginWithCredentials(email: string, password: string): Promise<LoginResponse> {
+    if (!API_BASE_URL) throw new Error('API URL not configured');
+
+    const response = await fetch(`${API_BASE_URL}/api/v1/platform-auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+    });
+
+    if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        if (response.status === 401) {
+            throw new Error('Email ou senha inválidos');
+        }
+        if (response.status === 429) {
+            throw new Error('Muitas tentativas. Aguarde alguns minutos.');
+        }
+        throw new Error(data.detail || 'Erro ao fazer login');
+    }
+
+    const data: LoginResponse = await response.json();
+
+    // If must_change_password, don't set session yet - let the caller handle it
+    if (!data.must_change_password && data.access_token && data.refresh_token) {
+        setAdminSession({
+            type: 'jwt',
+            accessToken: data.access_token,
+            refreshToken: data.refresh_token,
+            user: data.user,
+        });
+    }
+
+    return data;
+}
+
+export async function changePasswordForced(passwordChangeToken: string, newPassword: string): Promise<void> {
+    if (!API_BASE_URL) throw new Error('API URL not configured');
+
+    const response = await fetch(`${API_BASE_URL}/api/v1/platform-auth/change-password/forced`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password_change_token: passwordChangeToken, new_password: newPassword }),
+    });
+
+    if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.detail || 'Erro ao alterar senha');
+    }
+
+    const tokens = await response.json();
+    // After forced password change, we get new tokens - need to fetch user info
+    setAdminSession({
+        type: 'jwt',
+        accessToken: tokens.access_token,
+        refreshToken: tokens.refresh_token,
+    });
+
+    // Fetch user info
+    try {
+        const user = await fetchCurrentUser();
+        const session = getAdminSession();
+        if (session) {
+            setAdminSession({ ...session, user });
+        }
+    } catch {
+        // Continue without user info
+    }
+}
+
+async function fetchCurrentUser(): Promise<PlatformUser> {
+    const session = getAdminSession();
+    if (!session?.accessToken) throw new Error('Not authenticated');
+
+    const response = await fetch(`${API_BASE_URL}/api/v1/platform-auth/me`, {
+        headers: {
+            'Authorization': `Bearer ${session.accessToken}`,
+        },
+    });
+
+    if (!response.ok) throw new Error('Failed to fetch user');
+    return response.json();
+}
+
+export async function refreshTokens(): Promise<boolean> {
+    const session = getAdminSession();
+    if (session?.type !== 'jwt' || !session.refreshToken) return false;
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/v1/platform-auth/refresh`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ refresh_token: session.refreshToken }),
+        });
+
+        if (!response.ok) {
+            clearAdminSession();
+            return false;
+        }
+
+        const tokens = await response.json();
+        setAdminSession({
+            ...session,
+            accessToken: tokens.access_token,
+            refreshToken: tokens.refresh_token,
+        });
+        return true;
+    } catch {
+        clearAdminSession();
+        return false;
+    }
+}
+
+export async function logoutAdmin(): Promise<void> {
+    const session = getAdminSession();
+    if (session?.type === 'jwt' && session.refreshToken) {
+        try {
+            await fetch(`${API_BASE_URL}/api/v1/platform-auth/logout`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ refresh_token: session.refreshToken }),
+            });
+        } catch {
+            // Ignore errors on logout
+        }
+    }
+    clearAdminSession();
 }
 
 // Admin API request function
@@ -36,10 +227,10 @@ export async function adminRequest<T>(
     } = {}
 ): Promise<T> {
     const { method = 'GET', body } = options;
-    const token = getAdminToken();
+    const session = getAdminSession();
 
-    if (!token) {
-        throw new Error('Admin token not set');
+    if (!session) {
+        throw new Error('Not authenticated');
     }
 
     if (!API_BASE_URL) {
@@ -48,8 +239,16 @@ export async function adminRequest<T>(
 
     const headers: Record<string, string> = {
         'Content-Type': 'application/json',
-        'X-Admin-Token': token,
     };
+
+    // Use JWT auth if available, otherwise fall back to legacy token
+    if (session.type === 'jwt' && session.accessToken) {
+        headers['Authorization'] = `Bearer ${session.accessToken}`;
+    } else if (session.type === 'legacy' && session.legacyToken) {
+        headers['X-Admin-Token'] = session.legacyToken;
+    } else {
+        throw new Error('No valid authentication');
+    }
 
     const requestOptions: RequestInit = {
         method,
@@ -60,12 +259,24 @@ export async function adminRequest<T>(
         requestOptions.body = JSON.stringify(body);
     }
 
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, requestOptions);
+    let response = await fetch(`${API_BASE_URL}${endpoint}`, requestOptions);
+
+    // Try token refresh on 401 for JWT auth
+    if (response.status === 401 && session.type === 'jwt') {
+        const refreshed = await refreshTokens();
+        if (refreshed) {
+            const newSession = getAdminSession();
+            if (newSession?.accessToken) {
+                headers['Authorization'] = `Bearer ${newSession.accessToken}`;
+                response = await fetch(`${API_BASE_URL}${endpoint}`, { ...requestOptions, headers });
+            }
+        }
+    }
 
     if (!response.ok) {
         if (response.status === 401) {
-            clearAdminToken();
-            throw new Error('Token inválido ou expirado');
+            clearAdminSession();
+            throw new Error('Sessão expirada. Faça login novamente.');
         }
         if (response.status === 503) {
             throw new Error('Área admin desabilitada no servidor');
@@ -90,10 +301,10 @@ export const adminApi = {
     delete: <T>(endpoint: string, body?: unknown) => adminRequest<T>(endpoint, { method: 'DELETE', body }),
 };
 
-// Validate admin token against backend
+// Validate legacy admin token against backend
 export async function validateAdminToken(token: string): Promise<boolean> {
     if (!API_BASE_URL) return false;
-    
+
     try {
         const response = await fetch(`${API_BASE_URL}/admin/plans`, {
             method: 'GET',
