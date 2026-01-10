@@ -125,9 +125,9 @@ export default function LandingPage() {
               Começar Grátis
               <ArrowRight size={20} />
             </Link>
-            <a href="#how-it-works" className={styles.secondaryCta}>
+            <Link href="/demo" className={styles.secondaryCta}>
               Ver Demonstração
-            </a>
+            </Link>
           </div>
           <div className={styles.heroStats}>
             <div className={styles.stat}>
