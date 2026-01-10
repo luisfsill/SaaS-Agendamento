@@ -654,11 +654,11 @@
 }
 
 .demoSection .sectionContent {
-    padding: var(--space-4) var(--space-6) var(--space-8);
+    padding: var(--space-8) var(--space-6) var(--space-8);
 }
 
 .demoSection .sectionHeader {
-    margin-bottom: var(--space-6);
+    margin-bottom: var(--space-8);
 }
 
 .demoContainer {
@@ -666,7 +666,7 @@
     align-items: center;
     justify-content: center;
     gap: var(--space-4);
-    margin-bottom: 0;
+    margin-bottom: var(--space-4);
 }
 
 @media (max-width: 768px) {
