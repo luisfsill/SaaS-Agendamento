@@ -20,11 +20,9 @@ import {
   Target,
   Shield,
   TrendingUp,
-  Brain,
   Heart,
   Zap,
-  Eye,
-  ChefHat
+  Eye
 } from 'lucide-react';
 import { useTheme } from '@/lib/theme-context';
 import styles from './page.module.css';
@@ -44,151 +42,153 @@ export default function LandingPage() {
   const demoCards = [
     {
       id: 0,
-      title: 'Transforme seu WhatsApp',
-      subtitle: 'em um balcão que nunca fecha',
+      title: 'Enquanto você atende...',
+      subtitle: 'quem responde seus clientes?',
       icon: <Sparkles size={40} />,
       bgGradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
       content: (
         <div className={styles.demoIntroContent}>
-          <p>Uma agenda inteligente que gerencia seus clientes <strong>sozinha</strong>, enquanto você foca no serviço.</p>
+          <p>Às 23h, alguém pergunta <strong>&quot;tem horário amanhã?&quot;</strong></p>
+          <p>Você responde às 7h. Ela já marcou com o concorrente.</p>
           <div className={styles.demoHighlight}>
-            <Shield size={20} />
-            <span>Sistema <strong>blindado contra erros</strong></span>
+            <Zap size={20} />
+            <span><strong>Com Ritmo:</strong> resposta em 3 segundos, cliente agendado.</span>
           </div>
         </div>
       ),
     },
     {
       id: 1,
-      title: 'Isso é para você?',
-      subtitle: 'Veja se você se identifica...',
+      title: 'Reconhece esse filme?',
+      subtitle: 'A rotina de quem vive de agenda',
       icon: <Target size={40} />,
       bgGradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
       content: (
         <div className={styles.demoPainContent}>
           <div className={styles.demoPainItem}>
             <div className={styles.demoPainIcon}><Clock size={20} /></div>
-            <p>Interrompe o serviço para responder <strong>&quot;tem horário?&quot;</strong></p>
+            <p>Parar o serviço pra responder <strong>&quot;qual o valor?&quot;</strong></p>
           </div>
           <div className={styles.demoPainItem}>
-            <div className={styles.demoPainIcon}><TrendingUp size={20} /></div>
-            <p>Perde dinheiro com <strong>no-shows</strong></p>
+            <div className={styles.demoPainIcon}><Calendar size={20} /></div>
+            <p>Cliente confirma e... <strong>não aparece</strong></p>
           </div>
           <div className={styles.demoPainItem}>
-            <div className={styles.demoPainIcon}><MessageCircle size={20} /></div>
-            <p>Medo de robô falar <strong>besteira</strong></p>
+            <div className={styles.demoPainIcon}><Users size={20} /></div>
+            <p>Bom cliente sumiu há meses. <strong>Esqueceu de você.</strong></p>
           </div>
         </div>
       ),
     },
     {
       id: 2,
-      title: 'Para sua Sanidade',
-      subtitle: 'O lado operacional',
-      icon: <Brain size={40} />,
+      title: 'Nunca mais "tá ocupado"',
+      subtitle: 'Atenda 50 clientes ao mesmo tempo',
+      icon: <MessageCircle size={40} />,
       bgGradient: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
       content: (
         <div className={styles.demoSolutionContent}>
           <div className={styles.demoSolutionItem}>
-            <div className={styles.demoSolutionIcon}><Clock size={20} /></div>
-            <div><strong>Auto-gestão</strong><p>Cliente agenda sozinho</p></div>
+            <div className={styles.demoSolutionIcon}><Zap size={20} /></div>
+            <div><strong>Resposta Instantânea</strong><p>IA responde em segundos, 24/7</p></div>
           </div>
           <div className={styles.demoSolutionItem}>
-            <div className={styles.demoSolutionIcon}><Users size={20} /></div>
-            <div><strong>Equipe Organizada</strong><p>Cada profissional tem sua agenda</p></div>
+            <div className={styles.demoSolutionIcon}><Calendar size={20} /></div>
+            <div><strong>Agendamento Direto</strong><p>Cliente escolhe e confirma sozinho</p></div>
           </div>
           <div className={styles.demoSolutionItem}>
-            <div className={styles.demoSolutionIcon}><Shield size={20} /></div>
-            <div><strong>Resiliência</strong><p>Se falhar, cai para fluxo manual</p></div>
+            <div className={styles.demoSolutionIcon}><Eye size={20} /></div>
+            <div><strong>Preços e Horários</strong><p>Sempre corretos, sem chute</p></div>
           </div>
         </div>
       ),
     },
     {
       id: 3,
-      title: 'Para seu Bolso',
-      subtitle: 'O lado financeiro',
-      icon: <TrendingUp size={40} />,
+      title: 'Chega de "esqueci"',
+      subtitle: 'Reduza faltas em até 60%',
+      icon: <Bell size={40} />,
       bgGradient: 'linear-gradient(135deg, #134e5e 0%, #71b280 100%)',
       content: (
         <div className={styles.demoSolutionContent}>
           <div className={styles.demoSolutionItem}>
-            <div className={styles.demoSolutionIcon}><Calendar size={20} /></div>
-            <div><strong>Fim dos Buracos</strong><p>Lembretes reduzem no-shows</p></div>
-          </div>
-          <div className={styles.demoSolutionItem}>
-            <div className={styles.demoSolutionIcon}><BarChart3 size={20} /></div>
-            <div><strong>Visão de Dono</strong><p>Receita e ocupação em tempo real</p></div>
-          </div>
-          <div className={styles.demoSolutionItem}>
             <div className={styles.demoSolutionIcon}><Bell size={20} /></div>
-            <div><strong>Reengajamento</strong><p>Clientes sumidos voltam</p></div>
+            <div><strong>Lembrete Automático</strong><p>24h e 1h antes do horário</p></div>
+          </div>
+          <div className={styles.demoSolutionItem}>
+            <div className={styles.demoSolutionIcon}><CheckCircle size={20} /></div>
+            <div><strong>Confirmação Fácil</strong><p>Confirmo ou Preciso remarcar</p></div>
+          </div>
+          <div className={styles.demoSolutionItem}>
+            <div className={styles.demoSolutionIcon}><TrendingUp size={20} /></div>
+            <div><strong>Reposição Rápida</strong><p>Cancelou? Próximo da fila é avisado</p></div>
           </div>
         </div>
       ),
     },
     {
       id: 4,
-      title: 'Seu Cliente Ama',
-      subtitle: 'A experiência que fideliza',
+      title: 'Cliente sumiu?',
+      subtitle: 'A gente traz de volta',
       icon: <Heart size={40} />,
       bgGradient: 'linear-gradient(135deg, #c31432 0%, #240b36 100%)',
       content: (
         <div className={styles.demoExperienceContent}>
-          <div className={styles.demoExperienceItem}><MessageCircle size={22} /><span><strong>Zero Fricção</strong> — Tudo no WhatsApp</span></div>
-          <div className={styles.demoExperienceItem}><Zap size={22} /><span><strong>Resposta Rápida</strong> — Sem espera</span></div>
-          <div className={styles.demoExperienceItem}><Calendar size={22} /><span><strong>Sugestões Inteligentes</strong></span></div>
-          <div className={styles.demoExperienceItem}><Eye size={22} /><span><strong>Transparência Total</strong></span></div>
+          <div className={styles.demoExperienceItem}><MessageCircle size={22} /><span><strong>Reengajamento Automático</strong></span></div>
+          <div className={styles.demoExperienceItem}><Clock size={22} /><span>30 dias sem vir? Mensagem personalizada</span></div>
+          <div className={styles.demoExperienceItem}><Sparkles size={22} /><span>&quot;Sentimos sua falta! Que tal agendar?&quot;</span></div>
+          <div className={styles.demoExperienceItem}><TrendingUp size={22} /><span><strong>+23% de retorno</strong> em média</span></div>
         </div>
       ),
     },
     {
       id: 5,
-      title: 'O Superpoder',
-      subtitle: 'Por que somos diferentes',
+      title: 'IA que não inventa',
+      subtitle: 'O segredo do Ritmo',
       icon: <Shield size={40} />,
       bgGradient: 'linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)',
       content: (
         <div className={styles.demoDifferentialContent}>
-          <p className={styles.demoDifferentialQuote}>A maioria das IAs <span className={styles.strike}>&quot;acha&quot;</span> que sabe o preço. A nossa <strong>consulta o catálogo</strong> antes de falar.</p>
+          <p className={styles.demoDifferentialQuote}>Outras IAs <span className={styles.strike}>&quot;acham&quot;</span> que sabem. A nossa <strong>consulta seu catálogo</strong> antes de falar.</p>
           <div className={styles.demoCheckList}>
-            <div className={styles.demoCheckItem}><CheckCircle size={18} /><span>IA é a interface, não a chefe</span></div>
-            <div className={styles.demoCheckItem}><CheckCircle size={18} /><span>Dados vêm do banco</span></div>
-            <div className={styles.demoCheckItem}><CheckCircle size={18} /><span>Risco zero de erro</span></div>
+            <div className={styles.demoCheckItem}><CheckCircle size={18} /><span>Preço? Busca no seu cadastro</span></div>
+            <div className={styles.demoCheckItem}><CheckCircle size={18} /><span>Horário? Verifica agenda real</span></div>
+            <div className={styles.demoCheckItem}><CheckCircle size={18} /><span>Dúvida? Transfere pra você</span></div>
           </div>
         </div>
       ),
     },
     {
       id: 6,
-      title: 'Garçom e Chef',
-      subtitle: 'A analogia perfeita',
-      icon: <ChefHat size={40} />,
+      title: 'Vários profissionais?',
+      subtitle: 'Cada um com sua agenda',
+      icon: <Users size={40} />,
       bgGradient: 'linear-gradient(135deg, #834d9b 0%, #d04ed6 100%)',
       content: (
         <div className={styles.demoAnalogyContent}>
-          <div className={styles.demoAnalogyBad}><span>❌</span><p><strong>Outros:</strong> Garçom que tenta cozinhar</p></div>
-          <div className={styles.demoAnalogyGood}><span>✅</span><p><strong>Ritmo:</strong> Garçom perfeito + Chef no comando</p></div>
-          <p className={styles.demoAnalogyConclusion}>O Garçom nunca inventa um prato que o Chef não autorizou.</p>
+          <div className={styles.demoAnalogyGood}><span>👤</span><p>Cada profissional tem horários próprios</p></div>
+          <div className={styles.demoAnalogyGood}><span>📱</span><p>WhatsApp individual ou compartilhado</p></div>
+          <div className={styles.demoAnalogyGood}><span>💰</span><p>Comissões e relatórios separados</p></div>
+          <p className={styles.demoAnalogyConclusion}>Perfeito para salões, clínicas e estúdios.</p>
         </div>
       ),
     },
     {
       id: 7,
-      title: 'O Que Você Ganha',
-      subtitle: 'Não é só um robô...',
+      title: 'Comece em 3 minutos',
+      subtitle: 'Sem cartão. Sem contrato.',
       icon: <Sparkles size={40} />,
       bgGradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
       content: (
         <div className={styles.demoClosingContent}>
           <div className={styles.demoClosingBenefits}>
-            <div className={styles.demoClosingBenefit}><Clock size={28} /><span>Tempo</span></div>
+            <div className={styles.demoClosingBenefit}><Clock size={28} /><span>3min setup</span></div>
             <span className={styles.demoClosingPlus}>+</span>
-            <div className={styles.demoClosingBenefit}><TrendingUp size={28} /><span>Previsibilidade</span></div>
+            <div className={styles.demoClosingBenefit}><MessageCircle size={28} /><span>WhatsApp</span></div>
             <span className={styles.demoClosingPlus}>+</span>
-            <div className={styles.demoClosingBenefit}><Heart size={28} /><span>Paz Mental</span></div>
+            <div className={styles.demoClosingBenefit}><Zap size={28} /><span>IA 24/7</span></div>
           </div>
-          <p className={styles.demoClosingText}>Seu negócio rodando 24/7, mesmo de folga.</p>
+          <p className={styles.demoClosingText}>Teste grátis por 14 dias. Cancele quando quiser.</p>
         </div>
       ),
     },
