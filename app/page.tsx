@@ -38,145 +38,130 @@ export default function LandingPage() {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
-  // Cards da demonstração
+  // Cards da demonstração - Fluxo refatorado
   const demoCards = [
     {
       id: 0,
-      title: 'Enquanto você atende...',
-      subtitle: 'quem responde seus clientes?',
-      icon: <Sparkles size={40} />,
+      title: 'Você está perdendo vendas',
+      subtitle: 'enquanto dorme',
+      icon: <Zap size={40} />,
       bgGradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
       content: (
         <div className={styles.demoIntroContent}>
           <p>Às 23h, alguém pergunta <strong>&quot;tem horário amanhã?&quot;</strong></p>
-          <p>Você responde às 7h. Ela já marcou com o concorrente.</p>
+          <p>Você só responde às 7h. <strong>Ela já marcou com o concorrente.</strong></p>
           <div className={styles.demoHighlight}>
-            <Zap size={20} />
-            <span><strong>Com Ritmo:</strong> resposta em 3 segundos, cliente agendado.</span>
+            <TrendingUp size={20} />
+            <span>Perder ~R$ 500/mês em clientes é normal?</span>
           </div>
         </div>
       ),
     },
     {
       id: 1,
-      title: 'Reconhece esse filme?',
-      subtitle: 'A rotina de quem vive de agenda',
+      title: 'Os 3 problemas reais',
+      subtitle: 'que drenagem seu tempo',
       icon: <Target size={40} />,
       bgGradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
       content: (
         <div className={styles.demoPainContent}>
           <div className={styles.demoPainItem}>
-            <div className={styles.demoPainIcon}><Clock size={20} /></div>
-            <p>Parar o serviço pra responder <strong>&quot;qual o valor?&quot;</strong></p>
+            <div className={styles.demoPainIcon}><Zap size={20} /></div>
+            <p><strong>24/7 preso ao celular</strong> respondendo &quot;qual valor?&quot;</p>
           </div>
           <div className={styles.demoPainItem}>
             <div className={styles.demoPainIcon}><Calendar size={20} /></div>
-            <p>Cliente confirma e... <strong>não aparece</strong></p>
+            <p>Cliente marca e <strong>não aparece</strong> (60% de faltas)</p>
           </div>
           <div className={styles.demoPainItem}>
             <div className={styles.demoPainIcon}><Users size={20} /></div>
-            <p>Bom cliente sumiu há meses. <strong>Esqueceu de você.</strong></p>
+            <p>Clientes bons <strong>desaparecem</strong> sem aviso</p>
           </div>
         </div>
       ),
     },
     {
       id: 2,
-      title: 'Nunca mais "tá ocupado"',
-      subtitle: 'Atenda 50 clientes ao mesmo tempo',
+      title: 'Resposta instantânea 24/7',
+      subtitle: 'Sua IA atende enquanto dorme',
       icon: <MessageCircle size={40} />,
       bgGradient: 'linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)',
       content: (
         <div className={styles.demoSolutionContent}>
           <div className={styles.demoSolutionItem}>
             <div className={styles.demoSolutionIcon}><Zap size={20} /></div>
-            <div><strong>Resposta Instantânea</strong><p>IA responde em segundos, 24/7</p></div>
+            <div><strong>Cliente pergunta</strong><p>IA responde em 3 segundos, sempre</p></div>
           </div>
           <div className={styles.demoSolutionItem}>
             <div className={styles.demoSolutionIcon}><Calendar size={20} /></div>
-            <div><strong>Agendamento Direto</strong><p>Cliente escolhe e confirma sozinho</p></div>
+            <div><strong>Cliente agenda sozinho</strong><p>Escolhe horário, confirma. Você só trabalha.</p></div>
           </div>
           <div className={styles.demoSolutionItem}>
             <div className={styles.demoSolutionIcon}><Eye size={20} /></div>
-            <div><strong>Preços e Horários</strong><p>Sempre corretos, sem chute</p></div>
+            <div><strong>Dados sempre corretos</strong><p>Preço, horário, profissional - tudo verificado</p></div>
           </div>
         </div>
       ),
     },
     {
       id: 3,
-      title: 'Chega de "esqueci"',
-      subtitle: 'Reduza faltas em até 60%',
+      title: 'Reduz no-shows em 60%',
+      subtitle: 'Lembretes automáticos que funcionam',
       icon: <Bell size={40} />,
       bgGradient: 'linear-gradient(135deg, #134e5e 0%, #71b280 100%)',
       content: (
         <div className={styles.demoSolutionContent}>
           <div className={styles.demoSolutionItem}>
             <div className={styles.demoSolutionIcon}><Bell size={20} /></div>
-            <div><strong>Lembrete Automático</strong><p>24h e 1h antes do horário</p></div>
+            <div><strong>2 lembretes automáticos</strong><p>24h e 1h antes - via WhatsApp</p></div>
           </div>
           <div className={styles.demoSolutionItem}>
             <div className={styles.demoSolutionIcon}><CheckCircle size={20} /></div>
-            <div><strong>Confirmação Fácil</strong><p>Confirmo ou Preciso remarcar</p></div>
+            <div><strong>Confirmação em 1 clique</strong><p>Cliente confirma ou avisa que vai remarcar</p></div>
           </div>
           <div className={styles.demoSolutionItem}>
             <div className={styles.demoSolutionIcon}><TrendingUp size={20} /></div>
-            <div><strong>Reposição Rápida</strong><p>Cancelou? Próximo da fila é avisado</p></div>
+            <div><strong>Ganha +10 horas/semana</strong><p>Sem mais ligar confirmando agendamentos</p></div>
           </div>
         </div>
       ),
     },
     {
       id: 4,
-      title: 'Cliente sumiu?',
-      subtitle: 'A gente traz de volta',
-      icon: <Heart size={40} />,
-      bgGradient: 'linear-gradient(135deg, #c31432 0%, #240b36 100%)',
-      content: (
-        <div className={styles.demoExperienceContent}>
-          <div className={styles.demoExperienceItem}><MessageCircle size={22} /><span><strong>Reengajamento Automático</strong></span></div>
-          <div className={styles.demoExperienceItem}><Clock size={22} /><span>30 dias sem vir? Mensagem personalizada</span></div>
-          <div className={styles.demoExperienceItem}><Sparkles size={22} /><span>&quot;Sentimos sua falta! Que tal agendar?&quot;</span></div>
-          <div className={styles.demoExperienceItem}><TrendingUp size={22} /><span><strong>+23% de retorno</strong> em média</span></div>
-        </div>
-      ),
-    },
-    {
-      id: 5,
-      title: 'IA que não inventa',
-      subtitle: 'O segredo do Ritmo',
+      title: 'IA que realmente entende seu negócio',
+      subtitle: 'O diferencial Ritmo',
       icon: <Shield size={40} />,
       bgGradient: 'linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)',
       content: (
         <div className={styles.demoDifferentialContent}>
-          <p className={styles.demoDifferentialQuote}>Outras IAs <span className={styles.strike}>&quot;acham&quot;</span> que sabem. A nossa <strong>consulta seu catálogo</strong> antes de falar.</p>
+          <p className={styles.demoDifferentialQuote}>Concorrentes usam IA genérica. A nossa <strong>consulta seu catálogo em tempo real.</strong></p>
           <div className={styles.demoCheckList}>
-            <div className={styles.demoCheckItem}><CheckCircle size={18} /><span>Preço? Busca no seu cadastro</span></div>
-            <div className={styles.demoCheckItem}><CheckCircle size={18} /><span>Horário? Verifica agenda real</span></div>
-            <div className={styles.demoCheckItem}><CheckCircle size={18} /><span>Dúvida? Transfere pra você</span></div>
+            <div className={styles.demoCheckItem}><CheckCircle size={18} /><span>Sabe exatamente seu preço (não inventa)</span></div>
+            <div className={styles.demoCheckItem}><CheckCircle size={18} /><span>Vê agenda de verdade, nunca duplica</span></div>
+            <div className={styles.demoCheckItem}><CheckCircle size={18} /><span>Dúvida complexa? Te chama automaticamente</span></div>
           </div>
         </div>
       ),
     },
     {
-      id: 6,
-      title: 'Vários profissionais?',
-      subtitle: 'Cada um com sua agenda',
+      id: 5,
+      title: 'Perfeito para equipes',
+      subtitle: 'Cada profissional, sua agenda',
       icon: <Users size={40} />,
       bgGradient: 'linear-gradient(135deg, #834d9b 0%, #d04ed6 100%)',
       content: (
         <div className={styles.demoAnalogyContent}>
-          <div className={styles.demoAnalogyGood}><span>👤</span><p>Cada profissional tem horários próprios</p></div>
-          <div className={styles.demoAnalogyGood}><span>📱</span><p>WhatsApp individual ou compartilhado</p></div>
-          <div className={styles.demoAnalogyGood}><span>💰</span><p>Comissões e relatórios separados</p></div>
-          <p className={styles.demoAnalogyConclusion}>Perfeito para salões, clínicas e estúdios.</p>
+          <div className={styles.demoAnalogyGood}><span>👤</span><p>Horários e serviços únicos por profissional</p></div>
+          <div className={styles.demoAnalogyGood}><span>📱</span><p>WhatsApp individual ou time - você escolhe</p></div>
+          <div className={styles.demoAnalogyGood}><span>💰</span><p>Comissões e relatórios rastreados</p></div>
+          <p className={styles.demoAnalogyConclusion}>Pronto para salões, clínicas, estúdios.</p>
         </div>
       ),
     },
     {
-      id: 7,
+      id: 6,
       title: 'Comece em 3 minutos',
-      subtitle: 'Sem cartão. Sem contrato.',
+      subtitle: 'Teste grátis. Sem cartão. Sem contrato.',
       icon: <Sparkles size={40} />,
       bgGradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
       content: (
@@ -188,7 +173,11 @@ export default function LandingPage() {
             <span className={styles.demoClosingPlus}>+</span>
             <div className={styles.demoClosingBenefit}><Zap size={28} /><span>IA 24/7</span></div>
           </div>
-          <p className={styles.demoClosingText}>Teste grátis por 14 dias. Cancele quando quiser.</p>
+          <p className={styles.demoClosingText}>14 dias grátis. Sem surpresas depois.</p>
+          <Link href="/register" className={styles.demoClosingCta}>
+            Começar Meu Teste
+            <ArrowRight size={20} />
+          </Link>
         </div>
       ),
     },
@@ -198,30 +187,52 @@ export default function LandingPage() {
     if (isAnimating || currentCard >= demoCards.length - 1) return;
     setIsAnimating(true);
     setDirection('next');
+    // Track card view in GA
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'demo_card_next', {
+        card_index: currentCard,
+        card_title: demoCards[currentCard].title,
+      });
+    }
     setTimeout(() => {
       setCurrentCard(prev => prev + 1);
       setIsAnimating(false);
-    }, 300);
-  }, [isAnimating, currentCard, demoCards.length]);
+    }, 150);
+  }, [isAnimating, currentCard, demoCards]);
 
   const goToPrevCard = useCallback(() => {
     if (isAnimating || currentCard <= 0) return;
     setIsAnimating(true);
     setDirection('prev');
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'demo_card_prev', {
+        card_index: currentCard,
+        card_title: demoCards[currentCard].title,
+      });
+    }
     setTimeout(() => {
       setCurrentCard(prev => prev - 1);
       setIsAnimating(false);
-    }, 300);
-  }, [isAnimating, currentCard]);
+    }, 150);
+  }, [isAnimating, currentCard, demoCards]);
 
   const goToCard = (index: number) => {
     if (isAnimating || index === currentCard) return;
     setIsAnimating(true);
     setDirection(index > currentCard ? 'next' : 'prev');
+    
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'demo_card_viewed', {
+        card_index: index,
+        card_title: demoCards[index].title,
+        previous_card: currentCard,
+      });
+    }
+    
     setTimeout(() => {
       setCurrentCard(index);
       setIsAnimating(false);
-    }, 300);
+    }, 150);
   };
 
   // Fecha o menu ao redimensionar para desktop
